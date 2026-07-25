@@ -1,0 +1,35 @@
+# LaTeX 编译产物
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.pdf
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# Python（示例代码/脚本可能用到）
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Node（若未来加站点）
+node_modules/
+dist/
+
+# 个人草稿（不入库）
+drafts/
+_local/

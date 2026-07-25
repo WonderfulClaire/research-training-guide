@@ -1,0 +1,115 @@
+% =====================================================================
+%  IEEE 会议论文骨架（ICASSP / 通用双栏）
+%  用法：把本文件当起点，替换 [占位内容]。需要官方 IEEEtran.cls。
+%  编译：pdflatex -> bibtex -> pdflatex -> pdflatex
+%  注意：投稿为双盲时，请勿在正文/元数据出现作者与机构信息。
+% =====================================================================
+\documentclass{article}
+\usepackage{spconf,amsmath,graphicx}   % spconf 为 ICASSP 常用样式；无则改用 IEEEtran
+
+% ---- 双盲：投稿版作者留空/匿名；Camera-ready 再补真实信息 ----
+\title{[方法名]: [机制/亮点] for [任务]}
+\name{Anonymous}                       % 双盲：Anonymous ; 终稿：Author A, Author B
+\address{Anonymous Institution}        % 双盲：Anonymous ; 终稿：真实机构
+
+\begin{document}
+\maketitle
+
+% =========================== Abstract ================================
+\begin{abstract}
+% 5 句骨架：背景/问题 -> 现有不足 -> 方法 -> 主要结果(具体数字) -> 意义
+[一句话背景与痛点。] [现有方法的不足。] We propose [方法],
+which [核心机制]. Experiments on [数据集] show [具体数字，如 X dB / Y\%]
+improvement over the best baseline. [结论意义。]
+\end{abstract}
+
+\begin{keywords}
+[关键词1], [关键词2], [关键词3], [关键词4]
+\end{keywords}
+
+% ========================= 1. Introduction ===========================
+\section{Introduction}
+\label{sec:intro}
+% 背景与重要性
+Recently, [任务] has attracted growing attention because [原因].
+% 现有不足 / gap
+However, existing approaches struggle to [问题], mainly because [原因].
+% 本文做法 + 编号贡献
+In this paper, we propose [方法] to address this issue.
+The main contributions of this work are:
+\begin{itemize}
+  \item [贡献一：做了什么 + 带来什么]
+  \item [贡献二]
+  \item [贡献三]
+\end{itemize}
+
+% ========================= 2. Related Work ===========================
+\section{Related Work}
+\label{sec:related}
+Prior studies can be broadly divided into three lines: [路线一], [路线二],
+and [路线三]. Unlike [A] that focuses on [X], our method addresses [Y] by [Z].
+
+% ========================= 3. Proposed Method ========================
+\section{Proposed Method}
+\label{sec:method}
+% 3.1 问题形式化
+\subsection{Problem Formulation}
+Let $x \in \mathbb{R}^{T}$ denote the observed signal; our goal is to
+estimate the target $s$ from $x$.
+% 3.2 总览（建议放一张 block diagram）
+\subsection{Overview}
+\begin{figure}[t]
+  \centering
+  % \includegraphics[width=\linewidth]{fig/overview.pdf}
+  \caption{Overview of the proposed [方法].}
+  \label{fig:overview}
+\end{figure}
+% 3.3 逐模块 + 直觉解释
+\subsection{[Key Module]}
+Intuitively, this module lets the network focus on [作用]. Formally,
+\begin{equation}
+  y = f_{\theta}(x),
+  \label{eq:main}
+\end{equation}
+where $\theta$ denotes the learnable parameters.
+
+% ========================= 4. Experiments ===========================
+\section{Experiments}
+\label{sec:exp}
+\subsection{Setup}
+% 数据集 / 指标 / 基线 / 训练细节
+We evaluate on [数据集] and report [指标]. We compare against [基线].
+
+\subsection{Main Results}
+\begin{table}[t]
+  \centering
+  \caption{Comparison with baselines. Best in \textbf{bold}.}
+  \label{tab:main}
+  \begin{tabular}{lccc}
+    \hline
+    Method & Metric1 & Metric2 & \#Params \\
+    \hline
+    Baseline A & 00.0 & 00.0 & 0.0M \\
+    \textbf{Ours} & \textbf{00.0} & \textbf{00.0} & \textbf{0.0M} \\
+    \hline
+  \end{tabular}
+\end{table}
+As shown in Table~\ref{tab:main}, our method outperforms [基线] by
+[X] in [指标] while using [Y] fewer parameters.
+
+\subsection{Ablation Study}
+% 逐个去掉模块，证明每部分有用
+Table~\ref{tab:ablation} shows that removing [模块] degrades performance
+by [数字], confirming its contribution.
+
+% ========================= 5. Conclusion ============================
+\section{Conclusion}
+\label{sec:conclusion}
+We presented [方法], demonstrating that [核心发现].
+Future work includes extending [方法] to [方向].
+
+% ============================ References ============================
+\bibliographystyle{IEEEbib}
+\bibliography{refs}   % 需 refs.bib
+
+\end{document}
