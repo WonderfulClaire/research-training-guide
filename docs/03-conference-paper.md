@@ -72,7 +72,7 @@ Differentiate: Unlike [A] that focuses on ..., our method addresses ... by ...
 - 只引最相关的代表作，别写成致谢名单。
 - 双盲期引用自己用匿名编号，录用后补全称。
 
-### 5. ��法 Proposed Method
+### 5. 方法 Proposed Method
 论文的心脏。固定顺序：
 
 1. **问题形式化**：定义符号（`x` 观测、`s` 目标、`θ` 参数），全文统一。
