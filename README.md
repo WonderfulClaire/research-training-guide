@@ -42,6 +42,7 @@
 | 📖 素材 | [06 · 优秀论文范文精读](./docs/06-paper-examples.md) | 10 篇标杆论文，按写作模块逐节对照学 |
 | 🗣️ 素材 | [07 · 学术英语与句式库](./docs/07-academic-english.md) | 分场景可直接抄用的高频句式 |
 | 🧰 素材 | [08 · GitHub 科研工具箱](./docs/08-tools.md) | 文献/写作/排版/绘图/智能体精选开源工具 |
+| 🤖 专题 | [09 · LLM / Agent 后训练实验](./docs/09-llm-agent-experiments.md) | 数据泄漏、Verifier、Reward Hacking、Harness Generalization、SFT→RL 对照、AutoResearch 边界 |
 
 ### 📎 可下载模板（[templates/](./templates)）
 
@@ -51,6 +52,7 @@
 - [发明专利申请模板](./templates/patent-application-template.md)
 - [审稿回复（Rebuttal）模板](./templates/rebuttal-template.md)
 - [投稿前检查清单](./templates/submission-checklist.md)
+- [LLM / Agent 后训练实验检查清单](./templates/llm-agent-experiment-checklist.md)
 
 ## 怎么用这份指南
 
@@ -71,6 +73,7 @@
 - [ ] 更多学科方向的范文库（CV / NLP / 生物信息 / 材料…）
 - [ ] 英文版 README 与章节
 - [ ] 审稿人视角：如何审一篇论文（reviewer 训练）
+- [x] LLM / Agent 后训练实验协议与检查清单
 - [ ] 学术道德与 AI 使用规范专章
 
 欢迎通过 Issue / PR 一起补全，尤其欢迎补充**你所在领域的范文和踩坑经验**。
