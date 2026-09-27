@@ -208,3 +208,106 @@ AutoResearch 可以改 training config、prompt、reward weights、context polic
 一句话：
 
 > 对 LLM / Agent 后训练，最重要的实验能力不是把训练跑起来，而是证明这个提升真的是你声称的那个原因。
+
+
+## 14. 把协议落到真实代码：四个可复核案例
+
+这套协议不是只停留在 checklist。下面几个仓库分别把不同环节做成了可以运行、可以失败、可以审计的实现：
+
+| 研究问题 | 可复核实现 | 重点看什么 |
+| --- | --- | --- |
+| Reward hacking / secure verifier | [Kimi K3 Agentic Post-Training Lab](https://github.com/WonderfulClaire/kimi-k3-deep-dive) | mutable public signal、held-out tests、integrity verifier、verified trajectory → SFT、environment-owned GRPO |
+| Reward 与真实质量是否冲突 | [5G Diagnostic Agent](https://github.com/WonderfulClaire/5G-Diagnostic-Agent) | 多轮工具轨迹、correctness/reward 分离、learning route、离线 reward-alignment audit |
+| GRPO 为什么会忠实优化坏 reward | [RL From Scratch · Agentic Post-Training](https://github.com/WonderfulClaire/rl-from-scratch/tree/main/12_agentic_post_training) | 最小 categorical policy 更新，把 exploit reward 直接连到 advantage 与 policy probability |
+| Harness 到底由什么组成 | [Agent the Hard Way](https://github.com/WonderfulClaire/agent-hard-way) | provider、tools、permissions、context、memory、skills、subagents 如何逐层改变 action/state space |
+
+### Case A：public PASS 但 secure FAIL
+
+K3Lab 故意保留一个可被利用的 public-test signal。删除 public tests 时，naive checker 可以出现 0/0 PASS；secure verifier 会重新使用原始 public tests、held-out tests 和 integrity check，所以最终 success 仍为 0。
+
+这个案例适合验证：
+
+- verifier 是否与 policy-visible state 隔离；
+- reward hacking rate 怎么定义；
+- exploit trajectory 是否被保存；
+- verifier 修复后旧轨迹能否重算。
+
+### Case B：Reward 在涨，但 correctness ordering 反了
+
+5G Diagnostic Agent 把 rollout reward、独立 correctness、工具成本分别保存。训练前先把 group 路由到：
+
+~~~text
+rl_ready
+efficiency_rl
+audit_reward_quality_conflict
+audit_reward_efficiency_conflict
+teacher_or_sft_repair
+~~~
+
+并提供离线 audit，重新从保存的 reward/correctness/cost 向量计算 route，检查训练器有没有在冲突 group 上错误更新。
+
+这比只看平均 reward 更接近真正的训练系统审计。
+
+### Case C：优化器不是 reward 的纠错器
+
+RL From Scratch 的最小 demo 固定同一组 agent strategies，只替换 reward：
+
+~~~text
+naive reward:
+  correct fix        = 1
+  delete tests       = 1
+  hard-code cases    = 1
+  do nothing         = 0
+
+secure reward:
+  correct fix        = 1
+  all exploits       = 0
+~~~
+
+同样的 group-relative update 会忠实强化 reward=1 的行为。也就是说，**GRPO 可以让一个坏 verifier 的漏洞学得更快，而不会自动发现你的真实意图。**
+
+### Case D：Harness 也属于训练分布
+
+Agent the Hard Way 从最小 provider 开始，逐步增加 tool registry、permissions、history、compaction、memory、skills 和 subagents。进入后训练以后，这些都应该进入 trajectory metadata，而不是被当作“外部工程细节”。
+
+例如：
+
+~~~text
+harness_version
+selected_skills
+context_policy
+memory_enabled
+subagent_task_id
+fanout_limit
+tool_schema_variant
+~~~
+
+否则同一个 checkpoint 换 harness 后性能变化，很难判断来自模型还是执行系统。
+
+## 15. 一个更完整的后训练证据链
+
+把上面几类实验串起来，建议最后保留这条证据链：
+
+~~~text
+task split + harness version
+        ↓
+rollout trajectory
+        ↓
+visible reward components
+        ↓
+independent correctness / secure verifier
+        ↓
+reward-alignment audit
+        ↓
+verified successful trajectories
+        ↓
+SFT
+        ↓
+RL
+        ↓
+seen harness + held-out harness
+        ↓
+multi-seed report + failed cases
+~~~
+
+如果其中任一箭头不可复核，最终“RL 有提升”的结论都应该相应收窄。
