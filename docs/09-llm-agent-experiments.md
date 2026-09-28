@@ -168,6 +168,8 @@ AutoResearch 可以改 training config、prompt、reward weights、context polic
 
 否则自动科研很容易退化成自动刷 benchmark。
 
+一个可运行的最小实现可以参考 [K3Lab · Bounded AutoResearch](https://github.com/WonderfulClaire/kimi-k3-deep-dive/blob/main/docs/autoresearch.md)：search loop 只能改 allowlist 中的 max steps、history、seen harness 和预定义 prompt variant；candidate 在 dev 上按 secure verifier success 选择，alternate harness 与 held-out tasks 只在选择完成后评估一次，不把结果反馈回搜索。
+
 ## 11. 推荐实验表
 
 | Experiment | Train setting | Eval setting | Main question |
